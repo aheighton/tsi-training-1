@@ -6,8 +6,13 @@ import java.util.Scanner;
 public class Test1 {
     public static void main(String[] args)
     {
-        String password = passwordInput();
-        passwordChecker(password);
+
+        boolean isValid;
+        do
+        {
+            String password = passwordInput();
+            isValid = passwordChecker(password);
+        } while (!isValid);
     }
 
     public static String passwordInput()
@@ -17,7 +22,7 @@ public class Test1 {
         return reader.nextLine();
     }
 
-    public static void passwordChecker(String password)
+    public static boolean passwordChecker(String password)
     {
         boolean isValid = true;
 
@@ -59,5 +64,7 @@ public class Test1 {
         {
             System.out.println("Password valid.");
         }
+
+        return isValid;
     }
 }
