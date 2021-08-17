@@ -6,13 +6,22 @@ import java.util.Scanner;
 public class Test1 {
     public static void main(String[] args)
     {
-
+		int passCount = 0;
         boolean isValid;
         do
         {
             String password = passwordInput();
             isValid = passwordChecker(password);
-        } while (!isValid);
+            passCount += 1;
+        } while (!isValid && (passCount < 8));
+
+        if (isValid)
+        {
+        	System.out.println("Password set.");
+        } else
+        {
+			System.out.println("Number of tried exceeded.");
+        }
     }
 
     public static String passwordInput()
