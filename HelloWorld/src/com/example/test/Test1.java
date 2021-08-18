@@ -3,7 +3,8 @@ package com.example.test;
 import java.util.Scanner;
 
 
-public class Test1 {
+public class Test1
+{
     public static void main(String[] args)
     {
 		int passCount = 0;
@@ -11,7 +12,7 @@ public class Test1 {
         do
         {
             String password = passwordInput();
-            isValid = passwordChecker(password);
+            isValid = passwordChecker(password, true);
             passCount += 1;
         } while (!isValid && (passCount < 8));
 
@@ -31,20 +32,26 @@ public class Test1 {
         return reader.nextLine();
     }
 
-    public static boolean passwordChecker(String password)
+    public static boolean passwordChecker(String password, boolean systemOut)
     {
         boolean isValid = true;
 
 
         if (password.equals(password.toUpperCase()))
         {
-            System.out.println("Must contain lower case letter.");
+            if (systemOut)
+            {
+                System.out.println("Must contain lower case letter.");
+            }
             isValid = false;
         }
 
         if (password.equals(password.toLowerCase()))
         {
-            System.out.println("Must contain upper case letter.");
+            if (systemOut)
+            {
+                System.out.println("Must contain upper case letter.");
+            }
             isValid = false;
         }
 
@@ -59,17 +66,24 @@ public class Test1 {
         }
         if (!containsNumber)
         {
-            System.out.println("Must contain number 0-9.");
+            if (systemOut)
+            {
+                System.out.println("Must contain number 0-9.");
+
+            }
             isValid = false;
         }
 
         if (password.length() < 8)
         {
-            System.out.println("Must be at least 8 characters long.");
+            if (systemOut)
+            {
+                System.out.println("Must be at least 8 characters long.");
+            }
             isValid = false;
         }
 
-        if (isValid)
+        if (isValid && systemOut)
         {
             System.out.println("Password valid.");
         }
