@@ -7,7 +7,6 @@ public class Test3
 		boolean isValid;
 		int tries = 0;
 
-
 		do
 		{
 			String inputPassword = Test1.passwordInput();
