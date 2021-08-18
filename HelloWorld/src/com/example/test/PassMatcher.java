@@ -1,6 +1,6 @@
 package com.example.test;
 
-public class Test3
+public class PassMatcher
 {
 	public static void main(String[] args)
 	{
@@ -9,7 +9,7 @@ public class Test3
 
 		do
 		{
-			String inputPassword = Test1.passwordInput();
+			String inputPassword = SimplePassCheck.passwordInput();
 			isValid = checkPass(inputPassword);
 			tries++;
 		} while (!isValid && (tries < 8));
@@ -26,7 +26,7 @@ public class Test3
 	public static boolean checkPass(String input)
 	{
 		boolean isValid = false;
-		for (String[] passSet: Test2.passwords)
+		for (String[] passSet: PassArrayValidation.passwords)
 		{
 			for (String pass: passSet)
 			{

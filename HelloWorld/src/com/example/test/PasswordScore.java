@@ -6,14 +6,9 @@ public class PasswordScore
 {
 	public static void main(String[] args)
 	{
-		String newPass = Test1.passwordInput();
+		String newPass = SimplePassCheck.passwordInput();
 		int passScore = calcPassScore(newPass);
-		System.out.println("Your password's score is: "+passScore);
-		if (passScore < 10) System.out.println("Not great. You can do better.");
-		else if (passScore < 20) System.out.println("Good! Not great, but pretty good!");
-		else if (passScore < 40) System.out.println("Better, pretty secure! " +
-				"Make sure you use different passwords for every account.");
-		else System.out.println("Excellent! You really know your stuff.");
+		outputEval(passScore);
 	}
 
 	public static int calcPassScore(String password)
@@ -32,5 +27,15 @@ public class PasswordScore
 		if (special.matcher(password).find()) multiplier += 1;
 
 		return (multiplier * (password.length()-2));
+	}
+	
+	public static void outputEval(int score)
+	{
+		System.out.println("Your password's score is: "+score);
+		if (score < 10) System.out.println("Not great. You can do better.");
+		else if (score < 20) System.out.println("Good! Not great, but pretty good!");
+		else if (score < 40) System.out.println("Better, pretty secure! " +
+				"Make sure you use different passwords for every account.");
+		else System.out.println("Excellent! You really know your stuff.");
 	}
 }

@@ -1,6 +1,6 @@
 package com.example.test;
 
-public class Test2
+public class PassArrayValidation
 {
     static String[][] passwords = {{"a","b","c","d"},
             {"Password123","HelloWorld","AbC1026","X1uHm35a"},
@@ -16,7 +16,7 @@ public class Test2
             System.out.println("\n Password set " + (i + 1) + ".");
             for (String password : passwords[i])
             {
-                if (Test1.passwordChecker(password, false))
+                if (SimplePassCheck.passwordChecker(password, false))
                 {
                     System.out.println("\"" + password + "\" is valid.");
                 } else

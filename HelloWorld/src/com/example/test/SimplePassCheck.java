@@ -3,7 +3,7 @@ package com.example.test;
 import java.util.Scanner;
 
 
-public class Test1
+public class SimplePassCheck
 {
 
     public static void main(String[] args)

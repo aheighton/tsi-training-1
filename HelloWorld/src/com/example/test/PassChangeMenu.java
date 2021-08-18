@@ -3,7 +3,7 @@ package com.example.test;
 import java.util.*;
 import java.io.*;
 
-public class Test4
+public class PassChangeMenu
 {
 	public static String passFile = "passwords.txt";
 
@@ -29,7 +29,7 @@ public class Test4
 				}
 				case "2" -> {
 					System.out.println("Adding a password:");
-					String input = Test1.passwordInput();
+					String input = SimplePassCheck.passwordInput();
 					boolean dupe = checkDupe(input);
 					if (dupe)
 					{
@@ -41,13 +41,13 @@ public class Test4
 
 						/* Alex:
 						 * Adds any password, no matter what.
-						 * TODO: run new passwords through Test1 validation.
+						 * TODO: run new passwords through SimplePassCheck validation.
 						 */
 					}
 				}
 				case "3" -> {
 					System.out.println("Deleting a password:");
-					String input = Test1.passwordInput();
+					String input = SimplePassCheck.passwordInput();
 					boolean dupe = checkDupe(input);
 					if (dupe)
 					{
