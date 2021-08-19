@@ -1,2 +1,2 @@
 1/Brick/98/399/It is a brick./false/null
-2/Wood Plank/65/700/It is a wooden plank./false/null
+2/Wood Plank/67/700/It is a wooden plank./true/bogof

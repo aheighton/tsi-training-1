@@ -125,30 +125,26 @@ public class Item implements Offer
 		return Offer.super.validateOffer(offer);
 	}
 
-	public int getOfferPrice(List<Item> cart)
+	public float getOfferPrice(List<Order> cart)
 	{
 		if (getOfferStatus())
 		{
 			if (getOffer().equals("bogof"))
 			{
-				int number = 0;
-				for (Item checkItem: cart)
+				int number;
+				for (Order checkOrder: cart)
 				{
-					if (checkItem.equals(this))
+					if (checkOrder.getItem().equals(this))
 					{
-						number += 1;
+						number = checkOrder.getNumber();
+						return getPrice() * ((float) (Math.round(number/2f))/number);
 					}
 				}
-
-				return (getPrice() * (Math.round(number/2f))/(number));
 				/* Alex:
 				 * rather than set some items to full price and others to 0, this calculation makes a relative
 				 * equal price for each of them.
 				 * Math.round(number/2f) is either exactly half or 1 over half, and dividing this by the total gives
 				 * either exactly a half, or the correct proportion to pay half price for all but one (at full price)
-				 *
-				 * Probably a more efficient way to do this that doesn't require searching the whole list every time.
-				 * TODO: make bogof pricing not have to search the whole list every time
 				 */
 			}
 
@@ -158,7 +154,7 @@ public class Item implements Offer
 				try
 				{
 					int discount = parseInt(offer.substring(0, offer.length() - 5));
-					return (Math.round(getPrice() * discount / 100f));
+					return (getPrice() * discount / 100f);
 				} catch (Exception e)
 				{
 					return getPrice();

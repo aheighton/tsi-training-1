@@ -5,7 +5,7 @@ import java.util.*;
 public class Cart
 {
 	private User user;
-	private List<Item> contents;
+	private List<Order> contents;
 
 	public Cart(User user)
 	{
@@ -23,27 +23,27 @@ public class Cart
 		this.user = user;
 	}
 
-	public List<Item> getContents()
+	public List<Order> getContents()
 	{
 		return contents;
 	}
 
-	public void setContents(List<Item> contents)
+	public void setContents(List<Order> contents)
 	{
 		this.contents = contents;
 	}
 
 	public void emptyCart()
 	{
-		this.contents = new LinkedList<>();
+		setContents(new LinkedList<>());
 	}
 
 	public int getTotalPrice()
 	{
 		int totPrice = 0;
-		for (Item item: getContents())
+		for (Order item: getContents())
 		{
-			totPrice += item.getOfferPrice(getContents());
+			totPrice += item.getItem().getOfferPrice(getContents()) * item.getNumber();
 		}
 
 		return totPrice;
@@ -53,10 +53,11 @@ public class Cart
 	{
 		StringBuilder fullDetails = new StringBuilder();
 
-		for (Item item: getContents())
+		for (Order orderItem: getContents())
 		{
-			fullDetails.append(item.getName()).append(" (").append(item.getId()).append("):")
-					.append(item.getDescription()).append("\n");
+			fullDetails.append(orderItem.getNumber()).append("x ").append(orderItem.getItem().getName()).append(", ")
+					.append(orderItem.getItem().getPrice()).append (" each. (")
+					.append(orderItem.getItem().getDescription()).append(")\n");
 		}
 
 		if (fullDetails.toString().equals(""))
@@ -69,12 +70,26 @@ public class Cart
 	}
 
 
-	public boolean addItem(Item item)
+	public boolean addItem(Item item, int number)
 	{
-		if (item.getStock() > 0)
+		for (Order orderItem : getContents())
 		{
-			getContents().add(item);
-			item.setStock(item.getStock()-1);
+			if (orderItem.getItem().equals(item))
+			{
+				if (item.getStock() >= number)
+				{
+					orderItem.setNumber(orderItem.getNumber()+number);
+					item.setStock(item.getStock()-number);
+					return true;
+				}
+				return false;
+			}
+		}
+
+		if (item.getStock() >= number)
+		{
+			getContents().add(new Order(item, number));
+			item.setStock(item.getStock()-number);
 			return true;
 		}
 		return false;
@@ -82,11 +97,11 @@ public class Cart
 
 	public boolean removeItem(Item newItem)
 	{
-		for (Item item: getContents())
+		for (Order orderItem: getContents())
 		{
-			if (item.equals(newItem))
+			if (orderItem.getItem().equals(newItem))
 			{
-				getContents().remove(item);
+				getContents().remove(orderItem);
 				return true;
 			}
 		}

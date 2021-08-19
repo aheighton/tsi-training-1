@@ -33,10 +33,11 @@ public class OwnerRun
 				String fName = splitter.next();
 				int fPrice = splitter.nextInt();
 				int fStock = splitter.nextInt();
+				String fDescription = splitter.next();
 				splitter.next();
 				String fOffer = splitter.next();
 
-				stock.add(new Item(fId, fName, fPrice, fStock, fOffer));
+				stock.add(new Item(fId, fName, fPrice, fStock, fDescription, fOffer));
 			}
 
 		} catch (Exception e)
@@ -51,5 +52,6 @@ public class OwnerRun
 	{
 		Item item = new Item("1","Brick",98,399,"It is a brick.");
 		System.out.println(item);
+		item.save();
 	}
 }
