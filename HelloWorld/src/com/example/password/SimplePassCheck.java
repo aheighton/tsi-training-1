@@ -1,4 +1,4 @@
-package com.example.test;
+package com.example.password;
 
 import java.util.Scanner;
 
