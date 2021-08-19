@@ -3,21 +3,24 @@ package com.example.inheritance;
 public class User
 {
 	private String name;
-	private String id;
+	private String username;
 	private boolean guest;
+	private Cart cart;
 
-	public User(String name)
+	public User(String name, String username)
 	{
 		setName(name);
-		setId(generateId());
+		setUsername(username);
 		setGuest(false);
+		openCart();
 	}
+
 
 	public User()
 	{
 		setName("Guest");
-		setId(generateId());
 		setGuest(true);
+		openCart();
 	}
 
 	public String getName()
@@ -30,19 +33,14 @@ public class User
 		this.name = name;
 	}
 
-	public String getId()
+	public String getUsername()
 	{
-		return id;
+		return username;
 	}
 
-	public void setId(String id)
+	public void setUsername(String username)
 	{
-		this.id = id;
-	}
-
-	public String generateId()
-	{
-		return "";
+		this.username = username;
 	}
 
 	public boolean isGuest()
@@ -55,8 +53,34 @@ public class User
 		this.guest = guest;
 	}
 
+	public Cart getCart()
+	{
+		return cart;
+	}
+
+	public void setCart(Cart cart)
+	{
+		this.cart = cart;
+	}
+
 	public void openCart()
 	{
-		Cart cart = new Cart(this);
+		setCart(new Cart(this));
+	}
+
+	public void checkout()
+	{
+		//TODO: some method of payment using getCart().getTotalPrice(). Send cart confirmation.
+
+		if (isGuest())
+		{
+			//TODO: wipe data from guest checkout and possibly ask if want to make account
+			this.cart.emptyCart();
+			//I know this does the same thing but for now it stops the if from collapsing
+		} else
+		{
+			//TODO: move data to history
+			getCart().emptyCart();
+		}
 	}
 }

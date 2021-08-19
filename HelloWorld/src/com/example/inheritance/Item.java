@@ -1,5 +1,8 @@
 package com.example.inheritance;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.util.*;
 import java.util.regex.*;
 
@@ -7,21 +10,34 @@ import static java.lang.Integer.parseInt;
 
 public class Item implements Offer
 {
-	private String name;
+	public static final String stockRecord = "stockRecord.txt";
+
 	private String id;
+	private String name;
 	private int price;
 	private int stock;
 	private String description;
 	private boolean offerStatus;
 	private String offer;
 
-	public Item(String name, String id, int price, int stock, String description)
+	public Item(String id, String name, int price, int stock, String description, String offer)
 	{
-		setName(name);
 		setId(id);
+		setName(name);
 		setPrice(price);
 		setStock(stock);
 		setDescription(description);
+		setOffer(offer);
+	}
+
+	public Item(String id, String name, int price, int stock, String description)
+	{
+		setId(id);
+		setName(name);
+		setPrice(price);
+		setStock(stock);
+		setDescription(description);
+		setOffer("");
 	}
 
 	public String getName()
@@ -96,6 +112,10 @@ public class Item implements Offer
 		if (validateOffer(offer))
 		{
 			this.offer = offer;
+			setOfferStatus(true);
+		} else if (offer.equals(""))
+		{
+			setOfferStatus(false);
 		}
 	}
 
@@ -146,5 +166,61 @@ public class Item implements Offer
 			}
 		}
 		return getPrice();
+	}
+
+	public void save()
+	{
+		try
+		{
+			boolean exists = false;
+			File file = new File(stockRecord);
+
+			Scanner fReader = new Scanner(file);
+			Scanner splitter;
+
+			String nextRead;
+			List<String> fileRead = new LinkedList<>();
+
+			while (fReader.hasNextLine())
+			{
+				nextRead = fReader.nextLine();
+				splitter = new Scanner(nextRead).useDelimiter("/");
+				String nextId = splitter.next();
+
+				if (nextId.equals(getId()))
+				{
+					exists = true;
+					fileRead.add(this.toString());
+				} else
+				{
+					fileRead.add(nextRead);
+				}
+			}
+
+			if (!exists)
+			{
+				fileRead.add(this.toString());
+			}
+			fReader.close();
+
+			FileWriter fw = new FileWriter(file, false);
+			BufferedWriter bw = new BufferedWriter(fw);
+			for (String item: fileRead)
+			{
+				bw.write(item);
+				bw.newLine();
+			}
+			bw.close();
+
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public String toString()
+	{
+		return (getId()+"/"+getName()+"/"+getPrice()+"/"+getStock()+"/"+getDescription()+"/"+getOfferStatus()+"/"+getOffer());
 	}
 }

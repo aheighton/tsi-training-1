@@ -5,11 +5,11 @@ import static java.lang.Integer.parseInt;
 
 public interface Offer
 {
-	public boolean getOfferStatus();
-	public void setOfferStatus(boolean offerStatus);
-	public String getOffer();
-	public void setOffer(String offer);
-	public default boolean validateOffer(String offer)
+	boolean getOfferStatus();
+	void setOfferStatus(boolean offerStatus);
+	String getOffer();
+	void setOffer(String offer);
+	default boolean validateOffer(String offer)
 	{
 		if (offer.equals("bogof"))
 		{
@@ -22,7 +22,7 @@ public interface Offer
 		{
 			try
 			{
-				int discount = parseInt(offer.substring(0, offer.length() - 5));
+				parseInt(offer.substring(0, offer.length() - 5));
 				return true;
 			} catch (Exception e)
 			{

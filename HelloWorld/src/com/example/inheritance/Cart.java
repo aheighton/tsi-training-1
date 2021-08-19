@@ -13,12 +13,6 @@ public class Cart
 		emptyCart();
 	}
 
-	public Cart()
-	{
-		setUser(new User());
-		emptyCart();
-	}
-
 	public User getUser()
 	{
 		return user;
@@ -57,23 +51,21 @@ public class Cart
 
 	public String displayCart()
 	{
-		String fullDetails = "";
+		StringBuilder fullDetails = new StringBuilder();
 
 		for (Item item: getContents())
 		{
-			fullDetails += item.getName()
-						+ " ("
-						+ item.getId()
-						+ "):"
-						+ item.getDescription()
-						+ "\n";
+			fullDetails.append(item.getName()).append(" (").append(item.getId()).append("):")
+					.append(item.getDescription()).append("\n");
 		}
 
-		if (fullDetails.equals(""))
+		if (fullDetails.toString().equals(""))
 		{
 			return "Cart empty.";
 		}
-		return fullDetails;
+
+		fullDetails.append("Total price: ").append(getTotalPrice());
+		return fullDetails.toString();
 	}
 
 
@@ -84,6 +76,19 @@ public class Cart
 			getContents().add(item);
 			item.setStock(item.getStock()-1);
 			return true;
+		}
+		return false;
+	}
+
+	public boolean removeItem(Item newItem)
+	{
+		for (Item item: getContents())
+		{
+			if (item.equals(newItem))
+			{
+				getContents().remove(item);
+				return true;
+			}
 		}
 		return false;
 	}
